@@ -3,9 +3,14 @@ window.app ??= {};
 // for a snap, this page draws what it shows and posts the picture back. When a
 // change goes live, Nudge asks the page to reload, so it stays where it is.
 app.nudge = {
+  // Only nudgethis may ask: its address, and its address in development. The
+  // app's site lets only nudgethis frame it too; this holds even if it did not.
+  origins: ["https://wrati.dev", "http://127.0.0.1:8000", "http://localhost:8000"],
+
   hear(e) {
     const ask = e.data;
     if (window.parent === window || e.source !== window.parent || !ask) return;
+    if (!this.origins.includes(e.origin)) return;
     if (ask.type === "nudge:snap") this.snap(e);
     if (ask.type === "nudge:reload") {
       e.source.postMessage({ type: "nudge:reloading" }, e.origin);
