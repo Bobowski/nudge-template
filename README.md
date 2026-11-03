@@ -14,7 +14,31 @@ nudgethis copies these files into a new private repo, `nudge-<name>`, as one com
 
 To start apps from your own template, fork this repo and set `NUDGE_TEMPLATE` in nudgethis. Keep `static/js/nudge.js` and `static/js/screenshot.js`, and keep `starter` as the name. A private template works if Yard's GitHub app can read it.
 
-## Run
+## Deploy it on its own with Yard
+
+The template is a whole app, and it runs without nudgethis too. [Yard](https://github.com/stariodev/yard) deploys it from a `git push`, with no Containerfile. On a laptop that is logged in to a Yard host with GitHub connected ([set up a host](https://stario.dev/yard/install)), run:
+
+```bash
+git clone https://github.com/stariodev/nudge-template my-app
+```
+
+```bash
+cd my-app && git remote remove origin
+```
+
+```bash
+yard repo new
+```
+
+```bash
+yard app new --caddy my-app.example.com
+```
+
+`yard repo new` makes a private repo named after the folder and pushes to it. `yard app new` deploys it and serves it at the host that you name. After that, each `git push` to `main` is a deploy. [Your first app](https://stario.dev/yard/first-app) in Yard's docs explains each step.
+
+## Run it on a laptop
+
+You need [uv](https://docs.astral.sh/uv/) and [just](https://just.systems).
 
 ```bash
 just dev
