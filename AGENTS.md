@@ -141,3 +141,5 @@ Install is `.cursor/cloud-install.sh`.
 ## This app
 
 Notes for this app go below. `stario-create sync` replaces the text above and keeps this section.
+
+Nudge frames this app. `static/js/nudge.js` answers Nudge's `nudge:snap` message with a picture of the screen (through `static/js/screenshot.js`, modern-screenshot), so a phone can draw on the live app. Keep both scripts in `SCRIPTS`.
