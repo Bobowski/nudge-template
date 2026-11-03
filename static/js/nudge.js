@@ -17,6 +17,14 @@ app.nudge = {
         height: window.innerHeight,
         scale: Math.min(2, window.devicePixelRatio || 1),
         backgroundColor: bg,
+        // The picture is an SVG, and XML takes no ":" in an attribute name.
+        // Datastar's attributes (data-on:click) have one; drop them from the copy.
+        onCloneEachNode: (node) => {
+          if (node.nodeType !== 1) return;
+          for (const { name } of [...node.attributes]) {
+            if (name.includes(":")) node.removeAttribute(name);
+          }
+        },
         // The picture shows the part of the page on screen, on the page colour.
         style: {
           backgroundColor: bg,
