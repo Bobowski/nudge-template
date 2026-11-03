@@ -1,11 +1,34 @@
 window.app ??= {};
 // Nudge frames this app. A phone cannot capture the screen, so when Nudge asks
-// for a snap, this page draws what it shows and posts the picture back.
+// for a snap, this page draws what it shows and posts the picture back. When a
+// change goes live, Nudge asks the page to reload, so it stays where it is.
 app.nudge = {
+  hear(e) {
+    const ask = e.data;
+    if (window.parent === window || e.source !== window.parent || !ask) return;
+    if (ask.type === "nudge:snap") this.snap(e);
+    if (ask.type === "nudge:reload") {
+      e.source.postMessage({ type: "nudge:reloading" }, e.origin);
+      location.reload();
+    }
+  },
+
+  // A live page morphs the whole document; a new script there would not run,
+  // so a change to the page's scripts reloads it.
+  watch() {
+    const scripts = () =>
+      [...document.querySelectorAll("script[src]")]
+        .map((s) => s.src)
+        .sort()
+        .join(" ");
+    const first = scripts();
+    new MutationObserver(() => {
+      if (scripts() !== first) location.reload();
+    }).observe(document.head, { childList: true, subtree: true, attributes: true });
+  },
+
   async snap(e) {
     const ask = e.data;
-    if (window.parent === window || e.source !== window.parent) return;
-    if (!ask || ask.type !== "nudge:snap") return;
     let url = null;
     try {
       const body = getComputedStyle(document.body).backgroundColor;
@@ -37,4 +60,5 @@ app.nudge = {
     e.source.postMessage({ type: "nudge:snap", id: ask.id, url }, e.origin);
   },
 };
-window.addEventListener("message", (e) => app.nudge.snap(e));
+window.addEventListener("message", (e) => app.nudge.hear(e));
+app.nudge.watch();
