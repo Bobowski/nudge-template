@@ -5,7 +5,9 @@ window.app ??= {};
 app.nudge = {
   // Only nudgethis may ask: its address, and its address in development. The
   // app's site lets only nudgethis frame it too; this holds even if it did not.
-  origins: ["https://wrati.dev", "http://127.0.0.1:8000", "http://localhost:8000"],
+  // nudgethis puts its own address in place of NUDGETHIS_ORIGIN when it copies
+  // this file into a new app.
+  origins: ["NUDGETHIS_ORIGIN", "http://127.0.0.1:8000", "http://localhost:8000"],
 
   hear(e) {
     const ask = e.data;
