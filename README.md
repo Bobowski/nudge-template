@@ -1,6 +1,6 @@
 # nudge-template
 
-The first commit of every app that [nudgethis](https://github.com/stariodev/nudgethis) makes.
+The first commit of every app that [nudgethis](https://github.com/Bobowski/nudgethis) makes.
 
 It is a [Stario](https://stario.dev) app, made with `uvx stario-create@latest new starter`. [Yard](https://github.com/stariodev/yard) builds it with no Containerfile. Its `static/js/nudge.js` lets nudgethis work with the app from a phone: when nudgethis asks, the page sends a picture of itself, and it reloads in place when a change is live.
 
@@ -19,7 +19,7 @@ To start apps from your own template, fork this repo and set `NUDGE_TEMPLATE` in
 The template is a whole app, and it runs without nudgethis too. [Yard](https://github.com/stariodev/yard) deploys it from a `git push`, with no Containerfile. On a laptop that is logged in to a Yard host with GitHub connected ([set up a host](https://stario.dev/yard/install)), run:
 
 ```bash
-git clone https://github.com/stariodev/nudge-template my-app
+git clone https://github.com/Bobowski/nudge-template my-app
 ```
 
 ```bash
